@@ -10,7 +10,6 @@ use Mix.Config
 config :timeline,
   ecto_repos: [Timeline.Repo]
 
-IO.puts "SHITE"
 # Configures the endpoint
 config :timeline, TimelineWeb.Endpoint,
   url: [host: "localhost"],
