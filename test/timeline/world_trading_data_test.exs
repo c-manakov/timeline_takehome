@@ -16,7 +16,6 @@ defmodule Timeline.WorldTradingDataTest do
     assert {~D[2000-01-03], _} = List.first(history)
   end
 
-
   test "Return error on incorrect stock" do
     {:err, reason, symbol} = get_historical_data("something")
     assert symbol == "something"

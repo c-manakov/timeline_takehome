@@ -6,6 +6,9 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
+    "axios": "^0.19.0",
+    "highcharts": "^7.1.2",
+    "lodash": "^4.17.11",
     "nouislider": "^14.0.2",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",

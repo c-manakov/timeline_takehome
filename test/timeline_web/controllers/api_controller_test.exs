@@ -3,18 +3,18 @@ defmodule TimelineWeb.ApiControllerTest do
 
   test "POST /calculate", %{conn: conn} do
     response =
-        conn
-        |> post(Routes.api_path(conn, :calculate), %{
-          "amount" => 1000,
-          "date" => "2005-05-05",
-          "percentages" => %{
-            "AAPL" => 50,
-            "GOOGL" => 50
-          }
-        })
-        |> json_response(200)
+      conn
+      |> post(Routes.api_path(conn, :calculate), %{
+        "amount" => 1000,
+        "date" => "2005-05-05",
+        "percentages" => %{
+          "AAPL" => 50,
+          "GOOGL" => 50
+        },
+        "rebalanceFrequency" => "off"
+      })
+      |> json_response(200)
 
-        assert %{"date" => "2005-05-05",
-                 "portfolio" => %{"AAPL" => _, "GOOGL" => _}} = hd(response)
+    assert %{"date" => "2005-05-05", "portfolio" => %{"AAPL" => _, "GOOGL" => _}} = hd(response)
   end
 end
