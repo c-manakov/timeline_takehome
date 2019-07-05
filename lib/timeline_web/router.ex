@@ -19,6 +19,12 @@ defmodule TimelineWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/api", TimelineWeb do
+    pipe_through :api
+
+    post "/calculate", ApiController, :calculate
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", TimelineWeb do
   #   pipe_through :api

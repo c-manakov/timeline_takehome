@@ -22,7 +22,6 @@
   } else {
     totalAllocationClass = 'red'
   }
-  $: console.log(totalAllocation)
 
 </script>
 

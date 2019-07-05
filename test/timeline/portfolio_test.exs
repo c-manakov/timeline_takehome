@@ -28,9 +28,9 @@ defmodule Timeline.PortfolioTest do
   test "calculate portfolio values" do
     {:ok, portfolio_values, _} = calculate_portfolio_values(1000,
       %{"AAPL" => 50, "GOOGL" => 25, "VTI" => 25}, ~D[2005-10-10])
-    IO.inspect portfolio_values
     assert %{date: ~D[2005-10-10], value: _, portfolio: _, values: _} = hd(portfolio_values)
   end
+
   test "calculate portfolio values with errors" do
     {:err, errors} = calculate_portfolio_values(1000,
       %{"AAPL" => 50, "GOOGLSdas1321" => 25, "VTI" => 25}, ~D[2005-10-10])

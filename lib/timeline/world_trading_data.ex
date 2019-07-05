@@ -16,7 +16,6 @@ defmodule Timeline.WorldTradingData do
       otherwise ->
         otherwise
     end
-
   end
 
   defp sort_history(history) do
