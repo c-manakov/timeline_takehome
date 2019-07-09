@@ -2,14 +2,16 @@
   import _ from 'lodash'
   import axios from 'axios'
   import Result from './Result.svelte'
+  const newAsset = () => ({asset: '', allocation: undefined})
 
   let startDate = ""
   let initialAmount = undefined
-  let assets = []
+  let assets = [newAsset()]
   let rebalanceFrequency = 'off'
 
+
   function addAsset() {
-    assets = [...assets, {asset: '', allocation: undefined}]
+    assets = [...assets, newAsset()]
   }
 
   let data = {}
@@ -46,26 +48,26 @@
 </script>
 
 
-<div>
-  <div class="ui container">
-    <form class="ui form" on:submit|preventDefault={handleSubmit} >
-      <div class="field">
-        <label>Start date</label>
-        <input type=text name="start-date" placeholder="E.g., 2005-05-05" bind:value={startDate}>
+<div class="container d-flex-row">
+  <div class="form-container">
+    <form class="form" on:submit|preventDefault={handleSubmit} >
+      <div class="field d-flex-row justify-content-between">
+        <label class ="start-date">Start date</label>
+        <input class="col-5" type=text name="start-date" placeholder="E.g., 2005-05-05" bind:value={startDate}>
       </div>
-      <div class="field">
+      <div class="field d-flex-row justify-content-between">
         <label>Initial amount</label>
-        <input type=number name="initial-amount" placeholder="Initial amount" bind:value={initialAmount}>
+        <input class="col-5" type=number name="initial-amount" placeholder="Initial amount" bind:value={initialAmount}>
       </div>
-      <div class="field">
+      <div class="field d-flex-row justify-content-between">
         <label>Rebalance frequency</label>
-        <select bind:value={rebalanceFrequency}> 
+        <select class="col-5" bind:value={rebalanceFrequency}> 
           <option value="off">Off</option>
           <option value="yearly">Yearly</option>
           <option value="monthly">Monthly</option>
         </select>
       </div>
-      <table class="ui celled table">
+      <table class="celled table">
         <thead>
           <tr>
             <th>Asset</th>
@@ -75,27 +77,40 @@
         <tbody>
           {#each assets as {asset, allocation}, i}
             <tr>
-              <td data-label="Asset"><input type=text name="Asset" bind:value={asset} placeholder="Asset"></td>
-              <td>
+              <td align="center" data-label="Asset"><input type=text name="Asset" bind:value={asset} placeholder="Asset"></td>
+              <td align="center">
                 <div data-label="Allocation"><input type=number min=1 max=100 name="Allocation" bind:value={allocation}></div>
               </td>
             </tr>
           {/each}
-          <tr>
-            <td>Total</td>
-            <td class={totalAllocationClass}>{totalAllocation}</td>
-          </tr>
         </tbody>
       </table>
-      <button class="ui button" on:click|preventDefault={addAsset}>Add asset</button>
-      <button class="ui button">Test Portfolio</button>
+      <div class="d-flex-row"> 
+        <h3> 
+          Total: {totalAllocation}%
+        </h3> 
+      </div>
+      <div class="d-flex-row justify-content-between">
+        <div class="button" on:click|preventDefault={addAsset}><span>Add asset</span></div>
+        <div class="button" on:click={handleSubmit}><span>Test Portfolio</span></div>
+      </div>
     </form>
-    <Result data={data}/> 
   </div>
+  <Result data={data}/> 
 </div>
 
 <style>
-.yellow {background-color: yellow}
-.red {background-color: red}
-.green {background-color: green}
+table {
+  width: 100%;
+  margin: 35px 0;
+}
+td {
+  width: 50%;
+}
+td input {
+  width: 82%; 
+  margin: 0 auto;
+  padding: 5px 15px;
+}
+
 </style>

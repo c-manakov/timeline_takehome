@@ -11,19 +11,19 @@ defmodule Timeline.Portfolio do
 
     errors =
       res
-      |> Enum.filter(fn {task, result} ->
+      |> Enum.filter(fn {_task, result} ->
         case result do
           nil ->
             true
 
-          {:ok, {_, {:err, reason, _}}} ->
+          {:ok, {_, {:err, _reason, _}}} ->
             true
 
           _ ->
             false
         end
       end)
-      |> Enum.map(fn {task, result} ->
+      |> Enum.map(fn {_task, result} ->
         case result do
           nil ->
             {:err, :timeout}
@@ -39,7 +39,7 @@ defmodule Timeline.Portfolio do
       res =
         res
         # map all correct responses to histories with each entry marked with symbol
-        |> Enum.map(fn {task, {:ok, {symbol, {:ok, response}}}} ->
+        |> Enum.map(fn {_task, {:ok, {symbol, {:ok, response}}}} ->
           response.body["history"]
           |> Enum.map(fn it -> {symbol, it} end)
         end)
@@ -62,11 +62,10 @@ defmodule Timeline.Portfolio do
     end
   end
 
-  def allocate_portfolio(amount, percentages, values, date \\ nil) do
-    portfolio =
-      Map.merge(percentages, values, fn _k, percentage, value ->
-        Float.floor(amount * percentage / (100 * value), 2)
-      end)
+  def allocate_portfolio(amount, percentages, values) do
+    Map.merge(percentages, values, fn _k, percentage, value ->
+      Float.floor(amount * percentage / (100 * value), 2)
+    end)
   end
 
   def calculate_portfolio_values(portfolio, values) do
@@ -83,7 +82,7 @@ defmodule Timeline.Portfolio do
   def calculate_timeline(amount, percentages, date, recalculate \\ "off") do
     with {:ok, data} <- get_data(Map.keys(percentages), date) do
       {_date, values} = hd(data)
-      initial_portfolio = allocate_portfolio(amount, percentages, values, date)
+      initial_portfolio = allocate_portfolio(amount, percentages, values)
 
       {portfolio_values, final_portfolio} =
         data
