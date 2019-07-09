@@ -2,15 +2,15 @@ defmodule Timeline.PortfolioTest do
   use ExUnit.Case, async: true
   import Timeline.Portfolio
 
-  # test "get data" do
-  #   {:ok, data} = get_data(["AAPL", "GOOGL", "VTI"], ~D(2005-10-10))
-  #   assert {~D[2005-10-10], %{"AAPL" => _, "GOOGL" => _, "VTI" => _}} = hd(data)
-  # end
+  test "get data" do
+    {:ok, data} = get_data(["AAPL", "GOOGL", "VTI"], ~D(2005-10-10))
+    assert {~D[2005-10-10], %{"AAPL" => _, "GOOGL" => _, "VTI" => _}} = hd(data)
+  end
 
-  # test "get data with errors" do
-  #   {:err, errors} = get_data(["AAPL", "oops", "wrong"])
-  #   assert Enum.count(errors) == 2
-  # end
+  test "get data with errors" do
+    {:err, errors} = get_data(["AAPL", "oops", "wrong"])
+    assert Enum.count(errors) == 2
+  end
 
   test "allocate portfolio" do
     portfolio =
