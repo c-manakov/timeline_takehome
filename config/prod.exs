@@ -65,3 +65,5 @@ config :logger, level: :info
 # and configuration from environment variables.
 
 config :timeline, :trading_api, trading_api_key: System.get_env("TRADING_API_KEY")
+
+import_config "prod.secret.exs"
